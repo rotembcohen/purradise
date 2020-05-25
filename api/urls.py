@@ -6,6 +6,7 @@ router = routers.DefaultRouter()
 router.register(r'games', views.GameViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('games/', views.GetGamesView.as_view()),
+    path('api-rest/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

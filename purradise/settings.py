@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'rest_framework',
     'social_django',
+    'auth0login',
     'api',
 ]
 
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'purradise.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,6 +127,27 @@ SITE_ID = 1
 dotenv_file = os.path.join(BASE_DIR, ".env")
 if os.path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
+
+SOCIAL_AUTH_AUTH0_DOMAIN = os.getenv("SOCIAL_AUTH_AUTH0_DOMAIN")
+SOCIAL_AUTH_AUTH0_KEY = os.getenv("SOCIAL_AUTH_AUTH0_KEY")
+SOCIAL_AUTH_AUTH0_SECRET = os.getenv("SOCIAL_AUTH_AUTH0_SECRET")
+
+# Setting up Auth0 Scope
+SOCIAL_AUTH_AUTH0_SCOPE = [
+    'openid',
+    'profile',
+    'email'
+]
+
+# Setting up Authentication Backends
+AUTHENTICATION_BACKENDS = {
+    "auth0login.auth0backend.Auth0",
+    "django.contrib.auth.backends.ModelBackend",
+}
+
+# Setting up login and redirect URLs
+LOGIN_URL = "/login/auth0/"
+LOGIN_REDIRECT_URL = "/"
 
 django_heroku.settings(locals())
 del DATABASES['default']['OPTIONS']['sslmode']

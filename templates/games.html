@@ -1,0 +1,10 @@
+<html>
+  <body>
+    {% for i in games %}
+    <h1>{{ i.address}}</h1>
+    <h6>
+      No of Players: {{i.players_amount}}
+    </h6>
+    {% endfor %}
+  </body>
+</html>
